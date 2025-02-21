@@ -1,8 +1,10 @@
 {
   "editor.formatOnSave": true,
-  "editor.formatOnSaveMode": "modifications",
+  "editor.formatOnSaveMode": "file",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": ["source.fixAll.eslint", "source.organizeImports"],
-  "eslint.validate": ["javascript", "typescript"], // ESLint가 적용될 파일 확장자
-  "eslint.alwaysShowStatus": true 
+  "editor.codeActionsOnSave": [
+    "source.fixAll.eslint",
+    "source.organizeImports"
+  ],
+  "eslint.validate": ["javascript", "typescript"]
 }
