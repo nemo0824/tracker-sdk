@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function sendToserver<T>(url: string, data: T): Promise<T> {
+export async function sendToServer<T>(url: string, data: T): Promise<T> {
   try {
     const response = await axios.post<T>(url, data);
     return response.data;

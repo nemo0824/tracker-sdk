@@ -1,7 +1,3 @@
-export function getTimeStamp(): string {
-  return new Date().toISOString();
-}
-
 export function getDevice() {
   const userAgent = navigator.userAgent.toLowerCase();
   const os = (() => {

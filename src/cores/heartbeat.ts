@@ -1,18 +1,20 @@
-import { Timer } from '../types/type.js';
-import { getDevice, getTimeStamp } from '../utils/util.js';
-import { sendToserver } from './api.js';
+import { API_URL, HEART_BEAT_TIME } from '../constants/api.ts';
+import { getDevice } from '../utils/getDevice.ts';
+import { getTimeStamp } from '../utils/getTimeStamp.ts';
+import { sendToServer } from './api.ts';
 
 export function startHeartBeat() {
-  const heartBeatTimer: Timer = setInterval(() => {
+  const heartBeatTimer: ReturnType<typeof setInterval> = setInterval(() => {
     sendOnline();
-  }, 5000);
+  }, HEART_BEAT_TIME);
 
   window.addEventListener('load', () => {
     sendUserInfo();
   });
 
   window.addEventListener('beforeunload', () => {
-    sendOffline(heartBeatTimer);
+    clearHeartBeatTimer(heartBeatTimer);
+    sendOffline();
   });
 }
 
@@ -20,21 +22,22 @@ function sendUserInfo() {
   const data = {
     page: window.location.href,
     userPrevPage: document.referrer,
-    userAccessTime: getTimeStamp,
-    userDevice: getDevice,
+    userAccessTime: getTimeStamp(),
+    userDevice: getDevice(),
     userLanguage: navigator.language,
+    event: 'pageLoad',
   };
-  sendToserver('/user-info', data);
+  sendToServer(API_URL, data);
 }
 
-function sendOffline(heartBeatTimer: Timer) {
-  clearInterval(heartBeatTimer);
+function sendOffline() {
   const data = {
     page: window.location.pathname,
     timestamp: getTimeStamp(),
     status: 'offline',
+    event: 'pageUnload',
   };
-  navigator.sendBeacon(`api/heartbeat`, JSON.stringify(data));
+  navigator.sendBeacon(API_URL, JSON.stringify(data));
 }
 
 function sendOnline() {
@@ -42,6 +45,11 @@ function sendOnline() {
     page: window.location.pathname,
     timestamp: getTimeStamp(),
     status: 'online',
+    event: 'heartBeat',
   };
-  sendToserver(`api/heartbeat`, data);
+  sendToServer(API_URL, data);
+}
+
+function clearHeartBeatTimer(heartBeatTimer: ReturnType<typeof setInterval>) {
+  clearInterval(heartBeatTimer);
 }
