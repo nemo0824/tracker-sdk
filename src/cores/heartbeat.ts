@@ -1,10 +1,12 @@
-import { API_URL, HEART_BEAT_TIME } from '../constants/api.ts';
 import { getDevice } from '../utils/getDevice.ts';
 import { getTimeStamp } from '../utils/getTimeStamp.ts';
 import { sendToServer } from './api.ts';
 
+const API_URL = 'TEST_API';
+const HEART_BEAT_TIME = 5000;
+
 export function startHeartBeat() {
-  const heartBeatTimer: ReturnType<typeof setInterval> = setInterval(() => {
+  const heartBeatTimer = setInterval(() => {
     sendOnline();
   }, HEART_BEAT_TIME);
 
@@ -13,7 +15,7 @@ export function startHeartBeat() {
   });
 
   window.addEventListener('beforeunload', () => {
-    clearHeartBeatTimer(heartBeatTimer);
+    clearInterval(heartBeatTimer);
     sendOffline();
   });
 }
@@ -48,8 +50,4 @@ function sendOnline() {
     event: 'heartBeat',
   };
   sendToServer(API_URL, data);
-}
-
-function clearHeartBeatTimer(heartBeatTimer: ReturnType<typeof setInterval>) {
-  clearInterval(heartBeatTimer);
 }
