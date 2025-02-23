@@ -7,7 +7,6 @@ export async function sendUserInfo() {
   const userCountry = await getUserCountry();
   const data = {
     page: window.location.href,
-    userPrevPage: document.referrer,
     userAccessTime: getTimeStamp(),
     userBrowser: getBrowser(),
     userOs: getOs(),
