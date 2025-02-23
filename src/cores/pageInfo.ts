@@ -2,10 +2,10 @@ import { sendToServer } from './api.ts';
 
 const API_URL = 'TEST_API';
 
-export function pageInfo() {
+export function sendPageInfo() {
   let pageEnterTime = 0;
 
-  function recordPageEnter() {
+  function sendPageEnter() {
     pageEnterTime = Date.now();
     const data = {
       page: window.location.href,
@@ -15,7 +15,7 @@ export function pageInfo() {
     sendToServer(API_URL, data);
   }
 
-  function recordPageDuration() {
+  function sendPageDuration() {
     if (pageEnterTime === 0) return;
     const duration = Date.now() - pageEnterTime;
     const data = {
@@ -26,7 +26,7 @@ export function pageInfo() {
     sendToServer(API_URL, data);
   }
 
-  function sendReferrer() {
+  function sendPageReferrer() {
     const data = {
       page: window.location.href,
       referrerPage: document.referrer || 'direct',
@@ -35,5 +35,5 @@ export function pageInfo() {
     sendToServer(API_URL, data);
   }
 
-  return { recordPageEnter, recordPageDuration, sendReferrer };
+  return { sendPageEnter, sendPageDuration, sendPageReferrer };
 }
