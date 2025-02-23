@@ -5,7 +5,7 @@ const API_URL = 'TEST_API';
 export function pageInfo() {
   let pageEnterTime = 0;
 
-  function visitPageInfo() {
+  function recordPageEnter() {
     pageEnterTime = Date.now();
     const data = {
       page: window.location.href,
@@ -15,7 +15,7 @@ export function pageInfo() {
     sendToServer(API_URL, data);
   }
 
-  function visitPageDuration() {
+  function recordPageDuration() {
     if (pageEnterTime === 0) return;
     const duration = Date.now() - pageEnterTime;
     const data = {
@@ -35,5 +35,5 @@ export function pageInfo() {
     sendToServer(API_URL, data);
   }
 
-  return { visitPageInfo, visitPageDuration, sendReferrer };
+  return { recordPageEnter, recordPageDuration, sendReferrer };
 }
