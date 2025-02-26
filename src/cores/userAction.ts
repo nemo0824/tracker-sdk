@@ -6,7 +6,7 @@ import {
   scrollEventBatchArray,
 } from './batchEventArray.ts';
 
-export function getScrollEvent() {
+export function addScrollEventToBatch() {
   window.addEventListener('scroll', (event) => {
     const scrollTop = document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
@@ -34,7 +34,7 @@ export function getScrollEvent() {
   });
 }
 
-export function getClickEvent() {
+export function addClickEventToBatch() {
   window.addEventListener('click', (event) => {
     if (event.target && event.target instanceof HTMLElement) {
       const data: clickEventBatch = {
@@ -50,7 +50,7 @@ export function getClickEvent() {
 }
 
 export function getIsInteractive() {
-  const interActiveEvent = [
+  const interactionEvents = [
     'click',
     'scroll',
     'keydown',
@@ -63,15 +63,16 @@ export function getIsInteractive() {
   const handleInterActive = () => {
     isInterActive = true;
   };
-  interActiveEvent.forEach((event) => {
+  interactionEvents.forEach((event) => {
     window.addEventListener(event, handleInterActive);
   });
+  const INTERACTION_TIMEOUT = 30000;
   return new Promise((resolve) => {
     setTimeout(() => {
-      interActiveEvent.forEach((event) => {
+      interactionEvents.forEach((event) => {
         window.removeEventListener(event, handleInterActive);
       });
       resolve(isInterActive);
-    }, 30000);
+    }, INTERACTION_TIMEOUT);
   });
 }
