@@ -21,6 +21,7 @@ async function getUserCountry() {
   }
 }
 
+
 function getLanguage() {
   const windowLanguage = window.navigator.language || 'unknownLanguage';
   const language = windowLanguage.split('-')[1];
