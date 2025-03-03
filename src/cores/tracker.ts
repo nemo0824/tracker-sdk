@@ -1,12 +1,20 @@
 import { sendUserInfo } from './userInfo.ts';
 class Tracker {
+  private apiKey: string | null = null;
   constructor() {}
 
-  public init() {
+  public init(apiKey: string) {
+    if (!apiKey) {
+      console.error('api key가 없습니다');
+      return;
+    }
+    this.apiKey = apiKey;
     console.log('tracker start');
     window.addEventListener('load', sendUserInfo);
   }
-}
 
-const tracker = new Tracker();
-tracker.init();
+  public getApiKey() {
+    return this.apiKey;
+  }
+}
+export const tracker = new Tracker();

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { sendToServer } from './api.ts';
-const API_URL = `http://localhost:3000/domains/${window.location.hostname}/userInfo`;
 
 export async function sendUserInfo() {
   const country = await getUserCountry();
@@ -8,7 +7,7 @@ export async function sendUserInfo() {
     country,
     language: getLanguage(),
   };
-  sendToServer(API_URL, data);
+  sendToServer('/userInfo', data);
 }
 
 async function getUserCountry() {
@@ -20,7 +19,6 @@ async function getUserCountry() {
     return 'unknownCountry';
   }
 }
-
 
 function getLanguage() {
   const windowLanguage = window.navigator.language || 'unknownLanguage';
