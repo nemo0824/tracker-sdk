@@ -1,86 +1,28 @@
 import axios from 'axios';
-import { getTimeStamp } from '../utils/getTimeStamp.ts';
 import { sendToServer } from './api.ts';
-const API_URL = 'TEST_API';
+const API_URL = `http://localhost:3000/domains/${window.location.hostname}/userInfo`;
 
 export async function sendUserInfo() {
-  const userCountry = await getUserCountry();
+  const country = await getUserCountry();
   const data = {
-    page: window.location.href,
-    userAccessTime: getTimeStamp(),
-    userBrowser: getBrowser(),
-    userOs: getOs(),
-    userCountry,
-    userIsMobile: getIsMobile(),
-    userResolution: getResolution(),
-    userLanguage: navigator.language,
-    event: 'once',
+    country,
+    language: getLanguage(),
   };
   sendToServer(API_URL, data);
 }
 
-function getOs() {
-  const userAgent = navigator.userAgent.toLowerCase();
-  if (userAgent.indexOf('windows') === 0) {
-    return 'Windows';
-  } else if (userAgent.indexOf('mac') === 0) {
-    return 'macOS';
-  } else if (userAgent.indexOf('android') === 0) {
-    return 'Android';
-  } else if (
-    userAgent.indexOf('ipad') === 0 ||
-    userAgent.indexOf('iphone') === 0
-  ) {
-    return 'iOS';
-  } else {
-    return 'Other';
-  }
-}
-
-function getIsMobile() {
-  const userAgent = navigator.userAgent.toLowerCase();
-  if (
-    userAgent.indexOf('android') === 0 ||
-    userAgent.indexOf('ipad') === 0 ||
-    userAgent.indexOf('iphone') === 0
-  ) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function getResolution() {
-  return `${window.screen.width}x${window.screen.height}`;
-}
-
-function getBrowser() {
-  const userAgent = navigator.userAgent.toLowerCase();
-  if (userAgent.indexOf('chrome') === 0) {
-    return 'Chrome';
-  } else if (userAgent.indexOf('safari') === 0) {
-    return 'Safari';
-  } else if (userAgent.indexOf('firefox') === 0) {
-    return 'Firefox';
-  } else if (userAgent.indexOf('whale') === 0) {
-    return 'NaverWhale';
-  } else if (userAgent.indexOf('edge') === 0) {
-    return 'Edge';
-  } else if (
-    userAgent.indexOf('trident') !== -1 ||
-    userAgent.indexOf('mise') !== -1
-  ) {
-    return 'InternetExplorer';
-  } else {
-    return 'Other';
-  }
-}
-
 async function getUserCountry() {
   try {
-    const response = axios.get('https://ipapi.co/json/');
-    return (await response).data.country_name;
-  } catch (error) {
+    const response = await axios.get('https://ipapi.co/json/');
+    return response.data.country_name || 'unknownCountry';
+  } catch (err) {
+    console.error('country 찾기 오류', err);
     return 'unknownCountry';
   }
+}
+
+function getLanguage() {
+  const windowLanguage = window.navigator.language || 'unknownLanguage';
+  const language = windowLanguage.split('-')[1];
+  return language;
 }
