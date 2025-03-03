@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 import { getTimeStamp } from '../utils/getTimeStamp.ts';
 import { sendToServer } from './api.ts';
 const API_URL = 'TEST_API';
@@ -82,5 +83,16 @@ async function getUserCountry() {
     return (await response).data.country_name;
   } catch (error) {
     return 'unknownCountry';
+  }
+}
+
+export function createUserId() {
+  let userId = localStorage.getItem('userId');
+  if (!userId) {
+    userId = uuidv4();
+    localStorage.setItem('userId', userId);
+  }
+  if (!document.cookie.includes('userId=')) {
+    document.cookie = `userId=${userId}; path=/; max-age=604800; sameSite=None; Secure`;
   }
 }
