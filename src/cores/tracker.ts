@@ -1,3 +1,4 @@
+import { sendUserDevice } from './userDevice.ts';
 import { sendUserInfo } from './userInfo.ts';
 class Tracker {
   private apiKey: string | null = null;
@@ -9,6 +10,7 @@ class Tracker {
     }
     this.apiKey = apiKey;
     window.addEventListener('load', sendUserInfo);
+    window.addEventListener('load', sendUserDevice);
   }
 
   public getApiKey() {
