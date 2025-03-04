@@ -4,12 +4,10 @@ class Tracker {
   constructor() {}
 
   public init(apiKey: string) {
-    if (!apiKey) {
-      console.error('api key가 없습니다');
-      return;
+    if (apiKey.trim() === '') {
+      throw new Error('api key가 없습니다');
     }
     this.apiKey = apiKey;
-    console.log('tracker start');
     window.addEventListener('load', sendUserInfo);
   }
 
