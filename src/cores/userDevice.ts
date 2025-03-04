@@ -1,9 +1,6 @@
 import { sendToServer } from './api.ts';
 
 export async function sendUserDevice() {
-  if (sessionStorage.getItem('userDeviceSent')) {
-    return;
-  }
   const data = {
     browser: getBrowser(),
     isMobile: getIsMobile(),
@@ -11,7 +8,6 @@ export async function sendUserDevice() {
     resolution: getResolution(),
   };
   sendToServer('/userDevice', data);
-  sessionStorage.setItem('userDeviceSent', 'true');
 }
 
 function getOs() {

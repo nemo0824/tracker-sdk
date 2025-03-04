@@ -1,39 +1,26 @@
 import { sendToServer } from './api.ts';
 
-const API_URL = 'TEST_API';
+export function sendPageReferrer() {
+  const data = {
+    referrer: document.referrer || 'direct',
+  };
+  sendToServer('/pageInfo/referrer', data);
+}
 
 export function sendPageInfo() {
-  let pageEnterTime = 0;
+  const loadTime = getPageLoadTime();
+  const data = {
+    url: window.location.href,
+    loadTime: loadTime,
+  };
+  sendToServer('/pageInfo', data);
+}
 
-  function sendPageEnter() {
-    pageEnterTime = Date.now();
-    const data = {
-      page: window.location.href,
-      pageEnterTime: Date.now(),
-      event: 'PageMoveEnter',
-    };
-    sendToServer(API_URL, data);
-  }
-
-  function sendPageDuration() {
-    if (pageEnterTime === 0) return;
-    const duration = Date.now() - pageEnterTime;
-    const data = {
-      page: window.location.href,
-      duration: duration,
-      event: 'PageMoveLeave',
-    };
-    sendToServer(API_URL, data);
-  }
-
-  function sendPageReferrer() {
-    const data = {
-      page: window.location.href,
-      referrerPage: document.referrer || 'direct',
-      event: 'pageFirstReferrer',
-    };
-    sendToServer(API_URL, data);
-  }
-
-  return { sendPageEnter, sendPageDuration, sendPageReferrer };
+function getPageLoadTime() {
+  const [navigation] = performance.getEntriesByType(
+    'navigation'
+  ) as PerformanceNavigationTiming[];
+  return navigation
+    ? Math.floor(navigation.loadEventEnd - navigation.startTime)
+    : null;
 }

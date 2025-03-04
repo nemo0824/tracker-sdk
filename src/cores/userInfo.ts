@@ -2,16 +2,12 @@ import axios from 'axios';
 import { sendToServer } from './api.ts';
 
 export async function sendUserInfo() {
-  if (sessionStorage.getItem('userinfoSent')) {
-    return;
-  }
   const country = await getUserCountry();
   const data = {
     country,
     language: getLanguage(),
   };
   sendToServer('/userInfo', data);
-  sessionStorage.setItem('userInfoSent', 'true');
 }
 
 async function getUserCountry() {
