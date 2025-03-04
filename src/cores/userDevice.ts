@@ -1,22 +1,17 @@
-import axios from 'axios';
-import { getTimeStamp } from '../utils/getTimeStamp.ts';
 import { sendToServer } from './api.ts';
-const API_URL = 'TEST_API';
 
-export async function sendUserInfo() {
-  const userCountry = await getUserCountry();
+export async function sendUserDevice() {
+  if (sessionStorage.getItem('userDeviceSent')) {
+    return;
+  }
   const data = {
-    page: window.location.href,
-    userAccessTime: getTimeStamp(),
-    userBrowser: getBrowser(),
-    userOs: getOs(),
-    userCountry,
-    userIsMobile: getIsMobile(),
-    userResolution: getResolution(),
-    userLanguage: navigator.language,
-    event: 'once',
+    browser: getBrowser(),
+    isMobile: getIsMobile(),
+    os: getOs(),
+    resolution: getResolution(),
   };
-  sendToServer(API_URL, data);
+  sendToServer('/userDevice', data);
+  sessionStorage.setItem('userDeviceSent', 'true');
 }
 
 function getOs() {
@@ -73,14 +68,5 @@ function getBrowser() {
     return 'InternetExplorer';
   } else {
     return 'Other';
-  }
-}
-
-async function getUserCountry() {
-  try {
-    const response = axios.get('https://ipapi.co/json/');
-    return (await response).data.country_name;
-  } catch (error) {
-    return 'unknownCountry';
   }
 }
