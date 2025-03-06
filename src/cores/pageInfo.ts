@@ -1,19 +1,19 @@
 import { sendToServer } from './api.ts';
 
-export async function sendPageReferrer() {
+export function sendPageReferrer() {
   const data = {
     referrer: document.referrer || 'direct',
   };
-  await sendToServer('/pageInfo/referrer', data);
+  sendToServer('/pageInfo/referrer', data);
 }
 
-export async function sendPageInfo() {
+export function sendPageInfo() {
   const loadTime = getPageLoadTime();
   const data = {
     url: window.location.href,
     loadTime: loadTime,
   };
-  await sendToServer('/pageInfo', data);
+  sendToServer('/pageInfo', data);
 }
 
 function getPageLoadTime() {

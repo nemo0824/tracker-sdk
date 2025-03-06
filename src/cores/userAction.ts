@@ -1,8 +1,8 @@
 import { debounce } from '../utils/debounce.ts';
 import { sendToServer } from './api.ts';
 
-export async function sendUserScrollDepth() {
-  const debounceScrollHandler = debounce(async () => {
+export function sendUserScrollDepth() {
+  const debounceScrollHandler = debounce(() => {
     const scrollTop = document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
     const fullHeight = document.documentElement.scrollHeight;
@@ -23,15 +23,15 @@ export async function sendUserScrollDepth() {
       url: window.location.href,
       scrollDepth: recordScrolledPercent || 0,
     };
-    await sendToServer('userAction/scrollDepth', data);
+    sendToServer('userAction/scrollDepth', data);
   }, 500);
   window.addEventListener('scroll', debounceScrollHandler);
 }
 
-export async function sendIsBounced() {
+export function sendIsBounced() {
   const data = {
     url: window.location.href,
     isBounced: true,
   };
-  await sendToServer('userAction/bounceRate', data);
+  sendToServer('userAction/bounceRate', data);
 }

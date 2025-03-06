@@ -7,7 +7,7 @@ export async function sendUserInfo() {
     country,
     language: getLanguage(),
   };
-  await sendToServer('/userInfo', data);
+  sendToServer('/userInfo', data);
 }
 
 async function getUserCountry() {

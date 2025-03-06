@@ -28,12 +28,8 @@ class Tracker {
       await sendUserDevice();
       sessionStorage.setItem('userDeviceSent', 'true');
     });
-    window.addEventListener('load', async () => {
-      await sendPageInfo();
-    });
-    window.addEventListener('popstate', async () => {
-      await sendPageInfo();
-    });
+    window.addEventListener('load', sendPageInfo);
+    window.addEventListener('popstate', sendPageInfo);
     const originPushState = history.pushState;
     history.pushState = (...args) => {
       originPushState(...args);
@@ -46,25 +42,17 @@ class Tracker {
       await sendPageReferrer();
       sessionStorage.setItem('userPageReferrer', 'true');
     });
-    window.addEventListener('load', async () => {
-      await sendOnline();
-    });
-    document.addEventListener('visibilitychange', async () => {
+    window.addEventListener('load', sendOnline);
+    document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') {
-        await sendOnline();
+        sendOnline();
       } else if (document.visibilityState === 'hidden') {
-        await sendOffline();
+        sendOffline();
       }
     });
-    window.addEventListener('pagehide', async () => {
-      await sendOffline();
-    });
-    window.addEventListener('beforeunload', async () => {
-      await sendIsBounced();
-    });
-    window.addEventListener('load', async () => {
-      await sendUserScrollDepth();
-    });
+    window.addEventListener('pagehide', sendOffline);
+    window.addEventListener('beforeunload', sendIsBounced);
+    window.addEventListener('load', sendUserScrollDepth);
   }
 
   public getApiKey() {
