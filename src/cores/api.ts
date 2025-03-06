@@ -27,9 +27,12 @@ export async function sendToServer<T>(endpoint: string, data: T): Promise<T> {
 
 export async function getUserCookie() {
   try {
+    const userId = localStorage.getItem('userId');
     const url = `${API_URL_BASE}/userCookieId`;
-    const response = await axios.get(url);
-    return response.data;
+    const response = await axios.post(url, userId ? { userId } : null);
+    if (response.data.userId) {
+      localStorage.setItem('userId', response.data.userId);
+    }
   } catch (err) {
     console.error('유저 쿠키 요청 실패 ', err);
     throw err;

@@ -14,56 +14,57 @@ class Tracker {
     }
     this.apiKey = apiKey;
     await getUserCookie();
-    window.addEventListener('load', () => {
+    window.addEventListener('load', async () => {
       if (sessionStorage.getItem('userinfoSent')) {
         return;
       }
-      sendUserInfo;
+      await sendUserInfo();
       sessionStorage.setItem('userInfoSent', 'true');
     });
-    window.addEventListener('load', () => {
+    window.addEventListener('load', async () => {
       if (sessionStorage.getItem('userDeviceSent')) {
         return;
       }
-      sendUserDevice;
+      await sendUserDevice();
       sessionStorage.setItem('userDeviceSent', 'true');
     });
-    window.addEventListener('load', sendPageInfo);
-    window.addEventListener('popstate', sendPageInfo);
+    window.addEventListener('load', async () => {
+      await sendPageInfo();
+    });
+    window.addEventListener('popstate', async () => {
+      await sendPageInfo();
+    });
     const originPushState = history.pushState;
-    history.pushState = function (...args) {
-      originPushState.call(this, ...args);
+    history.pushState = (...args) => {
+      originPushState(...args);
       sendPageInfo();
     };
-    window.addEventListener('load', () => {
+    window.addEventListener('load', async () => {
       if (sessionStorage.getItem('userPageReferrer')) {
         return;
       }
-      sendPageReferrer;
+      await sendPageReferrer();
       sessionStorage.setItem('userPageReferrer', 'true');
     });
-    window.addEventListener('load', sendPageReferrer);
-    window.addEventListener('load', () => {
-      sendOnline();
-      sessionStorage.setItem('currentDomain', window.location.host);
+    window.addEventListener('load', async () => {
+      await sendOnline();
     });
-    document.addEventListener('visibilitychange', () => {
+    document.addEventListener('visibilitychange', async () => {
       if (document.visibilityState === 'visible') {
-        sendOnline();
+        await sendOnline();
       } else if (document.visibilityState === 'hidden') {
-        sendOffline();
+        await sendOffline();
       }
     });
-    window.addEventListener('pagehide', () => {
-      const previousDomain = sessionStorage.getItem('currentDomain');
-      const currentDomain = window.location.host;
-      if (previousDomain !== currentDomain) {
-        sendOffline();
-      }
-      sessionStorage.setItem('currentDomain', currentDomain);
+    window.addEventListener('pagehide', async () => {
+      await sendOffline();
     });
-    window.addEventListener('beforeunload', sendIsBounced);
-    window.addEventListener('load', sendUserScrollDepth);
+    window.addEventListener('beforeunload', async () => {
+      await sendIsBounced();
+    });
+    window.addEventListener('load', async () => {
+      await sendUserScrollDepth();
+    });
   }
 
   public getApiKey() {

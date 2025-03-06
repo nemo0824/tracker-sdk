@@ -1,15 +1,15 @@
 import { sendToServer } from './api.ts';
 
-export function sendOnline() {
+export async function sendOnline() {
   const data = {
     isOnline: true,
   };
-  sendToServer('/userConnection', data);
+  await sendToServer('/userConnection', data);
 }
 
-export function sendOffline() {
+export async function sendOffline() {
   const data = {
     isOnline: false,
   };
-  navigator.sendBeacon('/userConnection', JSON.stringify(data));
+  await navigator.sendBeacon('/userConnection', JSON.stringify(data));
 }

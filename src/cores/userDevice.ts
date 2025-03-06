@@ -7,7 +7,7 @@ export async function sendUserDevice() {
     os: getOs(),
     resolution: getResolution(),
   };
-  sendToServer('/userDevice', data);
+  await sendToServer('/userDevice', data);
 }
 
 function getOs() {
