@@ -14,10 +14,24 @@ export async function sendToServer<T>(endpoint: string, data: T): Promise<T> {
       'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
     };
-    const response = await axios.post<T>(url, data, { headers });
+    const response = await axios.post<T>(url, data, {
+      headers,
+      withCredentials: true,
+    });
     return response.data;
   } catch (error) {
     console.error('api 요청 실패', error);
     throw error;
+  }
+}
+
+export async function getUserCookie() {
+  try {
+    const url = `${API_URL_BASE}/userCookieId`;
+    const response = await axios.get(url);
+    return response.data;
+  } catch (err) {
+    console.error('유저 쿠키 요청 실패 ', err);
+    throw err;
   }
 }
