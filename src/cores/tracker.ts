@@ -1,3 +1,4 @@
+import { getUserCookie } from './api.ts';
 import { sendOffline, sendOnline } from './heartbeat.ts';
 import { sendPageInfo, sendPageReferrer } from './pageInfo.ts';
 import { sendUserDevice } from './userDevice.ts';
@@ -6,11 +7,12 @@ class Tracker {
   private apiKey: string | null = null;
   constructor() {}
 
-  public init(apiKey: string) {
+  public async init(apiKey: string) {
     if (apiKey.trim() === '') {
       throw new Error('api key가 없습니다');
     }
     this.apiKey = apiKey;
+    await getUserCookie();
     window.addEventListener('load', () => {
       if (sessionStorage.getItem('userinfoSent')) {
         return;
