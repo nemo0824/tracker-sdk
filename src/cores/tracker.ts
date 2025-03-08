@@ -1,6 +1,6 @@
 import { getUserCookie } from './api.ts';
 import { sendPageInfo, sendPageReferrer } from './pageInfo.ts';
-import { sendIsBounced, sendUserScrollDepth } from './userAction.ts';
+import { debounceScrollHandler, sendIsBounced } from './userAction.ts';
 import { sendOffline, sendOnline } from './userConnection.ts';
 import { sendUserDevice } from './userDevice.ts';
 import { sendUserInfo } from './userInfo.ts';
@@ -52,7 +52,7 @@ class Tracker {
     });
     window.addEventListener('pagehide', sendOffline);
     window.addEventListener('beforeunload', sendIsBounced);
-    window.addEventListener('load', sendUserScrollDepth);
+    window.addEventListener('scroll', debounceScrollHandler);
   }
 
   public getApiKey() {
