@@ -1,5 +1,5 @@
-import { debounce } from '../utils/debounce.ts';
-import { sendToServer } from './api.ts';
+import { debounce } from '../utils/debounce';
+import { sendToServer } from './api';
 
 export const debounceScrollHandler = debounce(() => {
   sendUserScrollDepth();

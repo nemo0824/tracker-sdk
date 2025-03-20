@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { tracker } from './tracker.ts';
+import { tracker } from './tracker';
 
 const API_URL_BASE = process.env.API_BASE_URL;
 

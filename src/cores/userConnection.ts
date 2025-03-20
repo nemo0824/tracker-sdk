@@ -1,4 +1,4 @@
-import { sendToServer } from './api.ts';
+import { sendToServer } from './api';
 
 export function sendOnline() {
   const data = {

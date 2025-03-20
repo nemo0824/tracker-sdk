@@ -1,9 +1,9 @@
-import { getUserCookie } from './api.ts';
-import { sendPageInfo, sendPageReferrer } from './pageInfo.ts';
-import { debounceScrollHandler, sendIsBounced } from './userAction.ts';
-import { sendOffline, sendOnline } from './userConnection.ts';
-import { sendUserDevice } from './userDevice.ts';
-import { sendUserInfo } from './userInfo.ts';
+import { getUserCookie } from './api';
+import { sendPageInfo, sendPageReferrer } from './pageInfo';
+import { debounceScrollHandler, sendIsBounced } from './userAction';
+import { sendOffline, sendOnline } from './userConnection';
+import { sendUserDevice } from './userDevice';
+import { sendUserInfo } from './userInfo';
 class Tracker {
   private apiKey: string | null = null;
   constructor() {}

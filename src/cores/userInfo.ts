@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { sendToServer } from './api.ts';
+import { sendToServer } from './api';
 
 export async function sendUserInfo() {
   const country = await getUserCountry();
