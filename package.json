@@ -1,6 +1,6 @@
 {
   "name": "tracker-sdk-nemo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "트래픽 분석을 위한 SDK",
   "main": "dist/tracker-sdk.cjs.js",
   "module": "dist/tracker-sdk.es.js",
@@ -9,6 +9,11 @@
   "files": [
     "dist"
   ],
+  "exports": {
+    "import": "./dist/bundle.js",
+    "require": "./dist/bundle.cjs",
+    "types": "./dist/bundle.d.ts"
+  },
   "scripts": {
     "build": "vite build",
     "start": "node dist/index.js",
