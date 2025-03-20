@@ -4,6 +4,7 @@ import { debounceScrollHandler, sendIsBounced } from './userAction';
 import { sendOffline, sendOnline } from './userConnection';
 import { sendUserDevice } from './userDevice';
 import { sendUserInfo } from './userInfo';
+
 class Tracker {
   private apiKey: string | null = null;
   constructor() {}
