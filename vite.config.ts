@@ -7,7 +7,7 @@ export default defineConfig({
     dts({
       rollupTypes: true,
       outDir: 'dist',
-      include: ['src/**/*.ts'],
+      include: ['src/**/*.ts', 'src/vite-env.d.ts'],
     }),
   ],
   build: {

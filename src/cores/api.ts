@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { tracker } from './tracker';
 
-const API_URL_BASE = process.env.API_BASE_URL;
+const API_URL_BASE = import.meta.env.VITE_API_URL_BASE;
 
 export async function sendToServer<T>(endpoint: string, data: T): Promise<T> {
   try {
