@@ -27,7 +27,7 @@ export async function sendToServer<T>(endpoint: string, data: T): Promise<T> {
 
 export async function getUserCookie() {
   try {
-    const url = `${API_URL_BASE}/userCookieId`;
+    const url = `${API_URL_BASE}/trackerSdk/userCookieId`;
     await axios.get(url, { withCredentials: true });
   } catch (err) {
     console.error('유저 쿠키 요청 실패 ', err);

@@ -7,7 +7,7 @@ export async function sendUserInfo() {
     country,
     language: getLanguage(),
   };
-  sendToServer('/userInfo', data);
+  sendToServer('/trackerSdk/userInfo', data);
 }
 
 async function getUserCountry() {

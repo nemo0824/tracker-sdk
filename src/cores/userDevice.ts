@@ -7,7 +7,7 @@ export function sendUserDevice() {
     os: getOs(),
     resolution: getResolution(),
   };
-  sendToServer('/userDevice', data);
+  sendToServer('/trackerSdk/userDevice', data);
 }
 
 function getOs() {

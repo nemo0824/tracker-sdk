@@ -4,7 +4,7 @@ export function sendPageReferrer() {
   const data = {
     referrer: document.referrer || 'direct',
   };
-  sendToServer('/pageInfo/referrer', data);
+  sendToServer('/trackerSdk/pageInfo/referrer', data);
 }
 
 export function sendPageInfo() {
@@ -13,7 +13,7 @@ export function sendPageInfo() {
     url: window.location.href,
     loadTime: loadTime,
   };
-  sendToServer('/pageInfo', data);
+  sendToServer('/trackerSdk/pageInfo', data);
 }
 
 function getPageLoadTime() {

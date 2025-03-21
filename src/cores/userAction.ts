@@ -26,12 +26,12 @@ function sendUserScrollDepth() {
     url: window.location.href,
     scrollDepth: recordScrolledPercent || 0,
   };
-  sendToServer('userAction/scrollDepth', data);
+  sendToServer('/trackerSdk/userAction/scrollDepth', data);
 }
 
 export function sendIsBounced() {
   const data = {
     url: window.location.href,
   };
-  sendToServer('userAction/bounceRate', data);
+  sendToServer('/trackerSdk/userAction/bounceRate', data);
 }
