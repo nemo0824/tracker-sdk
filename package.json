@@ -11,7 +11,8 @@
   ],
   "exports": {
     "import": "./dist/tracker-sdk.es.js",
-    "require": "./dist/tracker-sdk.cjs.js"
+    "require": "./dist/tracker-sdk.cjs.js",
+    "types": "./dist/tracker-sdk.d.ts"
   },
   "scripts": {
     "build": "vite build",
