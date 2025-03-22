@@ -1690,7 +1690,7 @@ const {
   formToJSON: dr,
   getAdapter: pr,
   mergeConfig: hr
-} = g, et = "https://localhost:3000";
+} = g, et = "https://tracker-server.site";
 async function B(e, t) {
   try {
     const n = Xn.getApiKey();
