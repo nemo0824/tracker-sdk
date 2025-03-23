@@ -1,8 +1,9 @@
 import { sendToServer } from './api';
 
 export function sendPageReferrer() {
+  const referrer = document.referrer.trim();
   const data = {
-    referrer: document.referrer || 'direct',
+    referrer: referrer === '' ? 'direct' : referrer,
   };
   sendToServer('/trackerSdk/pageInfo/referrer', data);
 }

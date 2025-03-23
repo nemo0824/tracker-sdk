@@ -9,36 +9,19 @@ export function sendUserDevice() {
   };
   sendToServer('/trackerSdk/userDevice', data);
 }
+const userAgentLower = navigator.userAgent.toLowerCase();
 
 function getOs() {
-  const userAgent = navigator.userAgent.toLowerCase();
-  if (userAgent.indexOf('windows') === 0) {
-    return 'Windows';
-  } else if (userAgent.indexOf('mac') === 0) {
-    return 'macOS';
-  } else if (userAgent.indexOf('android') === 0) {
-    return 'Android';
-  } else if (
-    userAgent.indexOf('ipad') === 0 ||
-    userAgent.indexOf('iphone') === 0
-  ) {
+  if (userAgentLower.includes('windows')) return 'Windows';
+  if (userAgentLower.includes('mac')) return 'macOS';
+  if (userAgentLower.includes('android')) return 'Android';
+  if (userAgentLower.includes('iphone') || userAgentLower.includes('ipad'))
     return 'iOS';
-  } else {
-    return 'Other';
-  }
+  return 'Other';
 }
 
 function getIsMobile() {
-  const userAgent = navigator.userAgent.toLowerCase();
-  if (
-    userAgent.indexOf('android') === 0 ||
-    userAgent.indexOf('ipad') === 0 ||
-    userAgent.indexOf('iphone') === 0
-  ) {
-    return true;
-  } else {
-    return false;
-  }
+  return /android|iphone|ipad/.test(userAgentLower);
 }
 
 function getResolution() {
@@ -46,23 +29,12 @@ function getResolution() {
 }
 
 function getBrowser() {
-  const userAgent = navigator.userAgent.toLowerCase();
-  if (userAgent.indexOf('chrome') === 0) {
-    return 'Chrome';
-  } else if (userAgent.indexOf('safari') === 0) {
-    return 'Safari';
-  } else if (userAgent.indexOf('firefox') === 0) {
-    return 'Firefox';
-  } else if (userAgent.indexOf('whale') === 0) {
-    return 'NaverWhale';
-  } else if (userAgent.indexOf('edge') === 0) {
-    return 'Edge';
-  } else if (
-    userAgent.indexOf('trident') !== -1 ||
-    userAgent.indexOf('mise') !== -1
-  ) {
+  if (userAgentLower.includes('whale')) return 'NaverWhale';
+  if (userAgentLower.includes('edg')) return 'Edge';
+  if (userAgentLower.includes('chrome')) return 'Chrome';
+  if (userAgentLower.includes('safari')) return 'Safari';
+  if (userAgentLower.includes('firefox')) return 'Firefox';
+  if (userAgentLower.includes('trident') || userAgentLower.includes('msie'))
     return 'InternetExplorer';
-  } else {
-    return 'Other';
-  }
+  return 'Other';
 }

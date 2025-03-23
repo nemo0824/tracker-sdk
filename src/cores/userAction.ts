@@ -12,7 +12,7 @@ function sendUserScrollDepth() {
   const scrolledPercent = Math.floor(
     ((scrollTop + windowHeight) / fullHeight) * 100
   );
-  let recordScrolledPercent;
+  let recordScrolledPercent = 0;
   if (scrolledPercent > 0 && scrolledPercent <= 25) {
     recordScrolledPercent = 25;
   } else if (scrolledPercent > 25 && scrolledPercent <= 50) {
