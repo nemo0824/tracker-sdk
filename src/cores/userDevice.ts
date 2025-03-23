@@ -9,9 +9,9 @@ export function sendUserDevice() {
   };
   sendToServer('/trackerSdk/userDevice', data);
 }
-const userAgentLower = navigator.userAgent.toLowerCase();
 
 function getOs() {
+  const userAgentLower = navigator.userAgent.toLowerCase();
   if (userAgentLower.includes('windows')) return 'Windows';
   if (userAgentLower.includes('mac')) return 'macOS';
   if (userAgentLower.includes('android')) return 'Android';
@@ -21,6 +21,7 @@ function getOs() {
 }
 
 function getIsMobile() {
+  const userAgentLower = navigator.userAgent.toLowerCase();
   return /android|iphone|ipad/.test(userAgentLower);
 }
 
@@ -29,6 +30,7 @@ function getResolution() {
 }
 
 function getBrowser() {
+  const userAgentLower = navigator.userAgent.toLowerCase();
   if (userAgentLower.includes('whale')) return 'NaverWhale';
   if (userAgentLower.includes('edg')) return 'Edge';
   if (userAgentLower.includes('chrome')) return 'Chrome';
