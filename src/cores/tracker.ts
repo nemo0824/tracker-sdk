@@ -32,7 +32,7 @@ class Tracker {
     });
     window.addEventListener('load', sendPageInfo);
     window.addEventListener('popstate', sendPageInfo);
-    const originPushState = history.pushState;
+    const originPushState = history.pushState.bind(history);
     history.pushState = (...args) => {
       originPushState(...args);
       sendPageInfo();

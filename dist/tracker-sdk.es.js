@@ -1825,7 +1825,7 @@ class Xn {
     }), window.addEventListener("load", async () => {
       sessionStorage.getItem("userDeviceSent") || (await Mn(), sessionStorage.setItem("userDeviceSent", "true"));
     }), window.addEventListener("load", se), window.addEventListener("popstate", se);
-    const n = history.pushState;
+    const n = history.pushState.bind(history);
     history.pushState = (...r) => {
       n(...r), se();
     }, window.addEventListener("load", async () => {
