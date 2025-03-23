@@ -1,5 +1,6 @@
 import { debounce } from '../utils/debounce';
-import { sendToServer } from './api';
+import { API_URL_BASE, sendToServer } from './api';
+import { tracker } from './tracker';
 
 export const debounceScrollHandler = debounce(() => {
   sendUserScrollDepth();
@@ -30,8 +31,18 @@ function sendUserScrollDepth() {
 }
 
 export function sendIsBounced() {
-  const data = {
-    url: window.location.href,
-  };
-  sendToServer('/trackerSdk/userAction/bounceRate', data);
+  const navEntry = performance.getEntriesByType(
+    'navigation'
+  )[0] as PerformanceNavigationTiming;
+  if (navEntry.type === 'reload') {
+    return;
+  }
+  const userId = tracker.getUserId();
+  const apiKey = tracker.getApiKey();
+  if (!userId || !apiKey) return;
+  const payload = JSON.stringify({ url: window.location.href, userId, apiKey });
+  navigator.sendBeacon(
+    `${API_URL_BASE}/trackerSdk/userAction/bounceRate/beacon`,
+    payload
+  );
 }

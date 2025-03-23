@@ -1,4 +1,5 @@
-import { sendToServer } from './api';
+import { API_URL_BASE, sendToServer } from './api';
+import { tracker } from './tracker';
 
 export function sendOnline() {
   const data = {
@@ -8,8 +9,22 @@ export function sendOnline() {
 }
 
 export function sendOffline() {
-  const data = {
+  const navEntry = performance.getEntriesByType(
+    'navigation'
+  )[0] as PerformanceNavigationTiming;
+  if (navEntry.type === 'reload') {
+    return;
+  }
+  const userId = tracker.getUserId();
+  const apiKey = tracker.getApiKey();
+  if (!userId || !apiKey) return;
+  const payload = JSON.stringify({
     isOnline: false,
-  };
-  navigator.sendBeacon('/trackerSdk/userConnection', JSON.stringify(data));
+    userId,
+    apiKey,
+  });
+  navigator.sendBeacon(
+    `${API_URL_BASE}/trackerSdk/userConnection/beacon`,
+    payload
+  );
 }

@@ -53,6 +53,7 @@ class Tracker {
       }
     });
     window.addEventListener('pagehide', sendOffline);
+    window.addEventListener('beforeunload', sendOffline);
     window.addEventListener('beforeunload', sendIsBounced);
     window.addEventListener('scroll', debounceScrollHandler);
   }

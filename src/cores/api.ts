@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { tracker } from './tracker';
 
-const API_URL_BASE = 'https://tracker-server.site';
+export const API_URL_BASE = 'https://tracker-server.site';
 export async function sendToServer<T>(endpoint: string, data: T): Promise<T> {
   try {
     const apiKey = tracker.getApiKey();
