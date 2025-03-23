@@ -12,7 +12,7 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/cores/tracker.ts'),
+      entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'tracker-sdk',
       formats: ['es', 'cjs'],
       fileName: (format) => `tracker-sdk.${format}.js`,

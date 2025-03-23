@@ -5,6 +5,7 @@ const API_URL_BASE = 'https://tracker-server.site';
 export async function sendToServer<T>(endpoint: string, data: T): Promise<T> {
   try {
     const apiKey = tracker.getApiKey();
+    const userId = tracker.getUserId();
     if (!apiKey) {
       throw new Error('API KEY가 설정되지 않았습니다');
     }
@@ -12,10 +13,10 @@ export async function sendToServer<T>(endpoint: string, data: T): Promise<T> {
     const headers = {
       'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
+      'x-user-id': userId,
     };
     const response = await axios.post<T>(url, data, {
       headers,
-      withCredentials: true,
     });
     return response.data;
   } catch (error) {
@@ -24,12 +25,11 @@ export async function sendToServer<T>(endpoint: string, data: T): Promise<T> {
   }
 }
 
-export async function getUserCookie() {
-  try {
-    const url = `${API_URL_BASE}/trackerSdk/userCookieId`;
-    await axios.get(url, { withCredentials: true });
-  } catch (err) {
-    console.error('유저 쿠키 요청 실패 ', err);
-    throw err;
+export function createOrGetUserId() {
+  let userId = localStorage.getItem('userId');
+  if (!userId) {
+    userId = crypto.randomUUID();
+    localStorage.setItem('userId', userId);
   }
+  return userId;
 }

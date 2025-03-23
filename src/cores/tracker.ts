@@ -1,4 +1,4 @@
-import { getUserCookie } from './api';
+import { createOrGetUserId } from './api';
 import { sendPageInfo, sendPageReferrer } from './pageInfo';
 import { debounceScrollHandler, sendIsBounced } from './userAction';
 import { sendOffline, sendOnline } from './userConnection';
@@ -7,6 +7,7 @@ import { sendUserInfo } from './userInfo';
 
 class Tracker {
   private apiKey: string | null = null;
+  private userId: string | null = null;
   constructor() {}
 
   public async init(apiKey: string) {
@@ -14,7 +15,7 @@ class Tracker {
       throw new Error('api key가 없습니다');
     }
     this.apiKey = apiKey;
-    await getUserCookie();
+    this.userId = createOrGetUserId();
     window.addEventListener('load', async () => {
       if (sessionStorage.getItem('userinfoSent')) {
         return;
@@ -58,6 +59,9 @@ class Tracker {
 
   public getApiKey() {
     return this.apiKey;
+  }
+  public getUserId() {
+    return this.userId;
   }
 }
 export const tracker = new Tracker();
