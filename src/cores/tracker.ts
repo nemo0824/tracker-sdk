@@ -1,10 +1,10 @@
+import { runOnDOMContentReady } from '../utils/runOnDOMContentReady';
 import { createOrGetUserId } from './api';
 import { sendPageInfo, sendPageReferrer } from './pageInfo';
 import { debounceScrollHandler, sendIsBounced } from './userAction';
 import { sendOffline, sendOnline } from './userConnection';
 import { sendUserDevice } from './userDevice';
 import { sendUserInfo } from './userInfo';
-
 class Tracker {
   private apiKey: string | null = null;
   private userId: string | null = null;
@@ -16,7 +16,7 @@ class Tracker {
     }
     this.apiKey = apiKey;
     this.userId = createOrGetUserId();
-    window.addEventListener('DOMContentLoaded', async () => {
+    runOnDOMContentReady(async () => {
       await Promise.all([
         sessionStorage.getItem('userInfoSent')
           ? null
