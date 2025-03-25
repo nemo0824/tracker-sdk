@@ -9,30 +9,24 @@ export async function sendOnline() {
 }
 
 export function sendOffline() {
+  const sentOffline = sessionStorage.getItem('sendOffline');
+  if (sentOffline) return;
   const navEntry = performance.getEntriesByType(
     'navigation'
   )[0] as PerformanceNavigationTiming;
-  if (navEntry.type === 'reload') {
-    console.log('[SDK] 새로고침으로 인한 offline 생략');
-    return;
-  }
+  if (navEntry.type === 'reload') return;
   const userId = tracker.getUserId();
   const apiKey = tracker.getApiKey();
-  if (!userId || !apiKey) {
-    console.warn('[SDK] sendOffline 중단: userId 또는 apiKey 누락');
-    return;
-  }
+  if (!userId || !apiKey) return;
+
   const payload = JSON.stringify({
     isOnline: false,
     userId,
     apiKey,
   });
-  console.log('[SDK] sendOffline 호출됨');
-  console.log('[SDK] 전송 payload:', payload);
-  console.log('[SDK] URL:', `${API_URL_BASE}/trackerSdk/userConnection/beacon`);
-  const result = navigator.sendBeacon(
+  navigator.sendBeacon(
     `${API_URL_BASE}/trackerSdk/userConnection/beacon`,
     payload
   );
-  console.log('[SDK] sendBeacon 결과:', result);
+  sessionStorage.setItem('sendOffline', 'true');
 }

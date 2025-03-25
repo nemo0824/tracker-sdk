@@ -47,15 +47,14 @@ class Tracker {
       originPushState(...args);
       sendPageInfo();
     };
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') {
-        sendOffline();
-      }
+    window.addEventListener('pagehide', () => {
+      sendOffline(), sendIsBounced();
     });
-    window.addEventListener('pagehide', sendOffline);
-    window.addEventListener('beforeunload', sendOffline);
     window.addEventListener('beforeunload', sendIsBounced);
-    window.addEventListener('scroll', debounceScrollHandler);
+    const htmlElement = document.documentElement;
+    htmlElement.addEventListener('scroll', debounceScrollHandler, {
+      passive: true,
+    });
   }
 
   public getApiKey() {

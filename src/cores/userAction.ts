@@ -31,6 +31,8 @@ function sendUserScrollDepth() {
 }
 
 export function sendIsBounced() {
+  const sendIsBounced = sessionStorage.getItem('sendIsBounced');
+  if (sendIsBounced) return;
   const navEntry = performance.getEntriesByType(
     'navigation'
   )[0] as PerformanceNavigationTiming;
@@ -45,4 +47,5 @@ export function sendIsBounced() {
     `${API_URL_BASE}/trackerSdk/userAction/bounceRate/beacon`,
     payload
   );
+  sessionStorage.setItem('sendIsBounced', 'true');
 }
