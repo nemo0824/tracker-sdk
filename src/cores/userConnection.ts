@@ -1,7 +1,7 @@
 import { API_URL_BASE, sendToServer } from './api';
 import { tracker } from './tracker';
 
-export function sendOnline() {
+export async function sendOnline() {
   const data = {
     isOnline: true,
   };

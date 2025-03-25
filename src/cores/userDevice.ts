@@ -1,6 +1,6 @@
 import { sendToServer } from './api';
 
-export function sendUserDevice() {
+export async function sendUserDevice() {
   const data = {
     browser: getBrowser(),
     isMobile: getIsMobile(),

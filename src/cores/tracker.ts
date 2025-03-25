@@ -16,39 +16,39 @@ class Tracker {
     }
     this.apiKey = apiKey;
     this.userId = createOrGetUserId();
-    window.addEventListener('load', async () => {
-      if (sessionStorage.getItem('userinfoSent')) {
-        return;
-      }
-      await sendUserInfo();
-      sessionStorage.setItem('userInfoSent', 'true');
+    window.addEventListener('DOMContentLoaded', async () => {
+      await Promise.all([
+        sessionStorage.getItem('userInfoSent')
+          ? null
+          : sendUserInfo().then(() =>
+              sessionStorage.setItem('userInfoSent', 'true')
+            ),
+        sessionStorage.getItem('userDeviceSent')
+          ? null
+          : sendUserDevice().then(() =>
+              sessionStorage.setItem('userDeviceSent', 'true')
+            ),
+        sessionStorage.getItem('userPageReferrer')
+          ? null
+          : sendPageReferrer().then(() =>
+              sessionStorage.setItem('userPageReferrer', 'true')
+            ),
+        sessionStorage.getItem('sendOnline')
+          ? null
+          : sendOnline().then(() =>
+              sessionStorage.setItem('sendOnline', 'true')
+            ),
+      ]);
     });
-    window.addEventListener('load', async () => {
-      if (sessionStorage.getItem('userDeviceSent')) {
-        return;
-      }
-      await sendUserDevice();
-      sessionStorage.setItem('userDeviceSent', 'true');
-    });
-    window.addEventListener('load', sendPageInfo);
+    window.addEventListener('DOMContentLoaded', sendPageInfo);
     window.addEventListener('popstate', sendPageInfo);
     const originPushState = history.pushState.bind(history);
     history.pushState = (...args) => {
       originPushState(...args);
       sendPageInfo();
     };
-    window.addEventListener('load', async () => {
-      if (sessionStorage.getItem('userPageReferrer')) {
-        return;
-      }
-      await sendPageReferrer();
-      sessionStorage.setItem('userPageReferrer', 'true');
-    });
-    window.addEventListener('load', sendOnline);
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') {
-        sendOnline();
-      } else if (document.visibilityState === 'hidden') {
+      if (document.visibilityState === 'hidden') {
         sendOffline();
       }
     });

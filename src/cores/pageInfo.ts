@@ -1,6 +1,6 @@
 import { sendToServer } from './api';
 
-export function sendPageReferrer() {
+export async function sendPageReferrer() {
   const referrer = document.referrer.trim();
   const data = {
     referrer: referrer === '' ? 'direct' : referrer,
