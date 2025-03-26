@@ -33,12 +33,6 @@ function sendUserScrollDepth() {
 export function sendIsBounced() {
   const sendIsBounced = sessionStorage.getItem('sendIsBounced');
   if (sendIsBounced) return;
-  const navEntry = performance.getEntriesByType(
-    'navigation'
-  )[0] as PerformanceNavigationTiming;
-  if (navEntry.type === 'reload') {
-    return;
-  }
   const userId = tracker.getUserId();
   const apiKey = tracker.getApiKey();
   if (!userId || !apiKey) return;

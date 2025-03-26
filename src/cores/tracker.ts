@@ -1,3 +1,4 @@
+import { isReload } from '../utils/isReload';
 import { runOnDOMContentReady } from '../utils/runOnDOMContentReady';
 import { createOrGetUserId } from './api';
 import { sendPageInfo, sendPageReferrer } from './pageInfo';
@@ -48,9 +49,11 @@ class Tracker {
       sendPageInfo();
     };
     window.addEventListener('pagehide', () => {
-      sendOffline(), sendIsBounced();
+      if (!isReload()) {
+        sendOffline();
+        sendIsBounced();
+      }
     });
-    window.addEventListener('beforeunload', sendIsBounced);
     const htmlElement = document.documentElement;
     htmlElement.addEventListener('scroll', debounceScrollHandler, {
       passive: true,
