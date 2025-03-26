@@ -27,7 +27,7 @@ function sendUserScrollDepth() {
     url: window.location.href,
     scrollDepth: recordScrolledPercent || 0,
   };
-  sendToServer('/trackerSdk/userAction/scrollDepth', data);
+  sendToServer('/trackerSdk/userAction/userScrollDepth', data);
 }
 
 export function sendIsBounced() {
