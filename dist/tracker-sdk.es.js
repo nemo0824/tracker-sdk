@@ -1856,16 +1856,16 @@ class Gn {
       ]);
     }), window.addEventListener("DOMContentLoaded", ie), window.addEventListener("popstate", ie);
     const n = history.pushState.bind(history);
-    history.pushState = (...r) => {
-      n(...r), ie();
+    history.pushState = (...s) => {
+      n(...s), ie();
     }, window.addEventListener("beforeunload", () => {
       nt() && sessionStorage.setItem("reloaded", "true");
     }), window.addEventListener("pagehide", () => {
-      const r = sessionStorage.getItem("reloaded") === "true";
-      sessionStorage.removeItem("reloaded"), r || (Mn(), qn());
-    }), window.addEventListener("scroll", Dn, {
+      const s = sessionStorage.getItem("reloaded") === "true";
+      sessionStorage.removeItem("reloaded"), s || (Mn(), qn());
+    }), document.documentElement.scrollHeight > document.documentElement.clientHeight ? window.addEventListener("scroll", Dn, {
       passive: !0
-    });
+    }) : console.warn("페이지에 스크롤 할요소가없습니다 scrollDepth 측정 생략");
   }
   getApiKey() {
     return this.apiKey;

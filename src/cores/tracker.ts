@@ -61,9 +61,16 @@ class Tracker {
         sendIsBounced();
       }
     });
-    window.addEventListener('scroll', debounceScrollHandler, {
-      passive: true,
-    });
+    const canScroll =
+      document.documentElement.scrollHeight >
+      document.documentElement.clientHeight;
+    if (canScroll) {
+      window.addEventListener('scroll', debounceScrollHandler, {
+        passive: true,
+      });
+    } else {
+      console.warn('페이지에 스크롤 할요소가없습니다 scrollDepth 측정 생략');
+    }
   }
 
   public getApiKey() {
