@@ -61,8 +61,7 @@ class Tracker {
         sendIsBounced();
       }
     });
-    const htmlElement = document.documentElement;
-    htmlElement.addEventListener('scroll', debounceScrollHandler, {
+    window.addEventListener('scroll', debounceScrollHandler, {
       passive: true,
     });
   }
