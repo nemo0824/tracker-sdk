@@ -48,9 +48,11 @@ class Tracker {
       originPushState(...args);
       sendPageInfo();
     };
-    if (isReload()) {
-      sessionStorage.setItem('reloaded', 'true');
-    }
+    window.addEventListener('beforeunload', () => {
+      if (isReload()) {
+        sessionStorage.setItem('reloaded', 'true');
+      }
+    });
     window.addEventListener('pagehide', () => {
       const wasReload = sessionStorage.getItem('reloaded') === 'true';
       sessionStorage.removeItem('reloaded');
