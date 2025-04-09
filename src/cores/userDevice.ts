@@ -11,12 +11,20 @@ export async function sendUserDevice() {
 }
 
 function getOs() {
-  const userAgentLower = navigator.userAgent.toLowerCase();
-  if (userAgentLower.includes('windows')) return 'Windows';
-  if (userAgentLower.includes('mac')) return 'macOS';
-  if (userAgentLower.includes('android')) return 'Android';
-  if (userAgentLower.includes('iphone') || userAgentLower.includes('ipad'))
+  const userAgent = navigator.userAgent.toLowerCase();
+  const platform = navigator.platform.toLowerCase();
+
+  if (
+    platform.includes('iphone') ||
+    platform.includes('ipad') ||
+    userAgent.includes('iphone') ||
+    userAgent.includes('ipad')
+  ) {
     return 'iOS';
+  }
+  if (platform.includes('mac')) return 'macOS';
+  if (userAgent.includes('android')) return 'Android';
+  if (platform.includes('win')) return 'Windows';
   return 'Other';
 }
 
