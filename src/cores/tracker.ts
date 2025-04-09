@@ -62,7 +62,7 @@ class Tracker {
       }
     });
     document.addEventListener('DOMContentLoaded', () => {
-      console.group('domcontentLoaded이후에 ');
+      console.log('DOMContentLoaded 이후 스크롤시점 성공');
       window.addEventListener('scroll', debounceScrollHandler, {
         passive: true,
       });
