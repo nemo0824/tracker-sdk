@@ -3,15 +3,20 @@ import { API_URL_BASE } from './api';
 import { tracker } from './tracker';
 
 export const debounceScrollHandler = debounce(() => {
+  console.log('debounceScrollHandler 실행');
   sendUserScrollDepth();
 }, 500);
 
 function sendUserScrollDepth() {
+  console.log('sendUserScrollDepth 진입');
   const scrollTop = document.documentElement.scrollTop;
   const windowHeight = window.innerHeight;
   const fullHeight = document.documentElement.scrollHeight;
   const scrolledPercent = Math.floor(
     ((scrollTop + windowHeight) / fullHeight) * 100
+  );
+  console.log(
+    `✅ scrollTop: ${scrollTop}, windowHeight: ${windowHeight}, fullHeight: ${fullHeight}, scrolledPercent: ${scrolledPercent}`
   );
   let recordScrolledPercent = 0;
   if (scrolledPercent > 0 && scrolledPercent <= 25) {
@@ -37,6 +42,7 @@ function sendUserScrollDepth() {
     `${API_URL_BASE}/trackerSdk/userAction/userScrollDepth/beacon`,
     payload
   );
+  console.log('sendBeacon 호출완료');
 }
 
 export function sendIsBounced() {

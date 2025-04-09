@@ -61,8 +61,11 @@ class Tracker {
         sendIsBounced();
       }
     });
-    window.addEventListener('scroll', debounceScrollHandler, {
-      passive: true,
+    document.addEventListener('DOMContentLoaded', () => {
+      console.group('domcontentLoaded이후에 ');
+      window.addEventListener('scroll', debounceScrollHandler, {
+        passive: true,
+      });
     });
   }
 

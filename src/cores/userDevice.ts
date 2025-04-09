@@ -13,7 +13,6 @@ export async function sendUserDevice() {
 function getOs() {
   const userAgent = navigator.userAgent.toLowerCase();
   const platform = navigator.platform.toLowerCase();
-
   if (
     platform.includes('iphone') ||
     platform.includes('ipad') ||
