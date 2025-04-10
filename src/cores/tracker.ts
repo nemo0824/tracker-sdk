@@ -3,7 +3,7 @@ import { runOnDOMContentReady } from '../utils/runOnDOMContentReady';
 import { createOrGetUserId } from './api';
 import { sendPageInfo, sendPageReferrer } from './pageInfo';
 import { debounceScrollHandler, sendIsBounced } from './userAction';
-import { sendOffline, sendOnline } from './userConnection';
+import { sendOffline, startHeartbeat } from './userConnection';
 import { sendUserDevice } from './userDevice';
 import { sendUserInfo } from './userInfo';
 class Tracker {
@@ -34,13 +34,9 @@ class Tracker {
           : sendPageReferrer().then(() =>
               sessionStorage.setItem('userPageReferrer', 'true')
             ),
-        sessionStorage.getItem('sendOnline')
-          ? null
-          : sendOnline().then(() =>
-              sessionStorage.setItem('sendOnline', 'true')
-            ),
       ]);
     });
+    startHeartbeat();
     window.addEventListener('DOMContentLoaded', sendPageInfo);
     window.addEventListener('popstate', sendPageInfo);
     const originPushState = history.pushState.bind(history);

@@ -26,3 +26,11 @@ export function sendOffline() {
   );
   sessionStorage.setItem('sendOffline', 'true');
 }
+
+const HEART_BEAT_TIME = 30000;
+
+export function startHeartbeat() {
+  setInterval(() => {
+    sendOnline();
+  }, HEART_BEAT_TIME);
+}
